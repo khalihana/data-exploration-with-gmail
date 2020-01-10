@@ -1,0 +1,21 @@
+import re
+import pandas as pd
+import csv
+import mailbox
+import urllib.request
+# avec google take out data télécharger votre mbox 
+mbox=mailbox.mbox(r'C:\Users\khalil\Desktop\khalihana.mbox')
+with open('mbox.csv','w', encoding="utf-8") as outfile:
+   writer = csv.writer(outfile)
+   writer.writerow(['Subject','From','Date','To'])
+   for message in mbox :
+      writer.writerow([message['Subject'], message['From'], message['Date'], message['To']])
+      messages=pd.read_csv('mbox.csv')
+      # structurer la date
+messages['Date1'] = messages['Date'].apply(lambda x : x.split(' ')[:4])
+messages['L*heur'] = messages['Date'].apply(lambda x : x.split(' ')[4])
+messages['DatePa2']=messages['Date'].str.slice(0,16)
+messages['Société'] = messages['From'].apply(lambda x : x.split('<')[0])
+en suite vous pouvez manupiler vos en fonction de problématique que vous avez en téte
+
+      
